@@ -1,0 +1,54 @@
+# -- MINIKUBE --
+minikube start 
+minikube start --driver podman
+minikube start --driver podman
+minikube profile list
+minikube stop
+time minikube start
+minikube delete
+time minikube start
+
+# -- KUBECTL --
+kubectl get ns
+kubectl get all
+kubectl api-resources
+
+# -- POD --
+kubectl get pods
+vi p.yaml
+kubectl apply -f p.yaml
+kubectl get pods
+kubectl logs pods/p c0
+kubectl logs pods/p c1
+kubectl delete -f p.yaml
+
+# -- DEPLOYMENT --
+vi d.yaml
+kubectl apply -f d.yaml
+kubectl get deploy,rs,po
+kubectl delete $(kubectl get pod -oname)
+kubectl scale deployment --replicas=0
+kubectl get deploy,rs,po
+kubectl scale deployment --replicas=1
+kubectl get deploy,rs,po
+kubectl delete deployment/d
+
+# -- PERSISTENT VOLUME --
+kubectl appy -f pf
+kubectl get po,pvc,pv
+kubectl exec -it p -- cat /mnt/test/a
+kubectl delete po p
+kubectl delete $(kubectl get pvc -oname)
+
+# -- TIPS --
+kubectl create --dry-run=client deployment --image busybox asdf -oyaml
+kubectl create --dry-run=client deployment --image busybox asdf -oyaml | kubectl apply -f -
+kubectl describe pod/asdf
+
+# -- DOCKER/PODMAN --
+v Dockerfile
+podman build -t a .
+podman run -it localhost/a
+podman save $1 -o $2/$1
+minikube ssh docker image rm $1
+minikube image load $1
