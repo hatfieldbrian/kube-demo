@@ -1,0 +1,14 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: p
+spec:
+  containers:
+    - name: c0
+      image: busybox
+      imagePullPolicy: IfNotPresent
+      command: ['sh', '-c', 'echo "Hello, Kubernetes!"; sleep 300']
+    - name: c1
+      image: localhost/a
+      imagePullPolicy: IfNotPresent
